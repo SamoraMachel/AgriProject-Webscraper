@@ -1,8 +1,12 @@
 import scrapy
-
+from scrapy import signals
+from scrapy.signalmanager import dispatcher
+from config import crochet
+from scrapy.crawler import CrawlerRunner
 
 
 SEARCH_URL = "https://www.agriculture.com/search?search_api_views_fulltext="
+output_data = []
 
 def question_search(search : str = "cow feeding"):
     list_search = search.split(' ')
@@ -21,6 +25,7 @@ class AgroSpider(scrapy.Spider):
         self.start_urls = {
             question_search(kwargs.get("search", "goat feed"))
         }
+
     
     def parse(self, response, **kwargs):
         for article in response.css(".public-search-result"):
@@ -32,16 +37,23 @@ class AgroSpider(scrapy.Spider):
         
         
         return super().parse(response, **kwargs)
+
+def _crawler_result(item, response, spider):
+    output_data.append(dict(item)) 
+
+@crochet.run_in_reactor
+def scrape_with_crochet(search_str : str):
+    output_data.clear()
+    # This will connect to the dispatcher that will kind of loop the code between these two functions.
+    dispatcher.connect(_crawler_result, signal=signals.item_scraped)
+    
+    # This will connect to the ReviewspiderSpider function in our scrapy file and after each yield will pass to the crawler_result function.
+    eventual = CrawlerRunner().crawl(AgroSpider, search = search_str)
+    return eventual
+
+
     
 
-        
-    
-"""
-title = response.css(".content h2 a::text").get()
-text = response.css(".content .field-body p::text").get()
-date = response.css(".content .content-footer::text").get()
-
-"""
 
 
     

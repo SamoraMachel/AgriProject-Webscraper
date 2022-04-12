@@ -1,25 +1,39 @@
 from random import Random
-from flask import jsonify
-from scraper import AgroSpider
-from config import app
+from flask import jsonify, request
+import time
+from scraper import scrape_with_crochet, output_data
+from config import app, crochet
+
+
 
 @app.route("/", methods=['GET'])
 def home():
     return jsonify({
-        "/recommendations" : "gets general data users display",
-        "/farmerQuestion" : "posts farmers question"
+        "/recommend/" : "gets general data users display",
+        "/question/" : {    
+            "architecture" : {
+                "search" : "data to be searched"
+            }
+        }
     })
 
-@app.route('/recommendations', methods=['GET'])
+@crochet.run_in_reactor
+@app.route('/recommend/', methods=['GET'])
 def requestForData():
     recommendation_list : list[str] = [
         'goat feeds',
         'cow feeds'
     ] 
-    spider : AgroSpider = AgroSpider(search=recommendation_list[Random.randint(0, recommendation_list.__len__())])
-    return jsonify(spider.parse)
+    scrape_with_crochet(recommendation_list[Random().randint(0, recommendation_list.__len__() - 1)])
+    time.sleep(5)
+    return jsonify(output_data)
 
-@app.route('/farmerQuestion', methods=['POST'])
+@app.route('/question/', methods=['POST'])
 def scrapeData():
-    pass
+    data  = dict(request.get_json())
+    search_data = data.get('search')
+    scrape_with_crochet(search_data)
+    time.sleep(5)
+    return jsonify(output_data)
+    
 

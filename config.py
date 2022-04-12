@@ -1,6 +1,8 @@
 from flask import Flask
-import os
+import crochet
 
 
+
+crochet.setup()
 # application program 
 app = Flask(__name__)
