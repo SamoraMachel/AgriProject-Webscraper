@@ -1,11 +1,9 @@
-from flask import Flask
+from config import app
+from api import *
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
-# application program 
-app = Flask(__name__)
 
 
 if __name__ == '__main__':
