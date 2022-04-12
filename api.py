@@ -10,15 +10,44 @@ from config import app, crochet
 @app.route("/", methods=['GET'])
 def home():
     return jsonify({
-        "/recommend/" : "get random recommendations to display in the home screen",
+        "/recommend/" : {
+            "GET" : {
+                'url' : request.base_url() + "/recommend/",
+                'description' : "get random recommendations to display in the home screen",
+                'returns' : {
+                    "title" : 'String',
+                    "image" : "String",
+                    "text" : "String",
+                    "author" : "String",
+                    "link" : "String"
+                }
+            }
+        },
         "/question/" : {    
             "POST" : {
-                "data" : "data to be searched"
+                'url' : request.base_url() + "/question/",
+                'description' :"data to be searched",
+                'data' : "String",
+                'returns' : {
+                    "title" : 'String',
+                    "image" : "String",
+                    "text" : "String",
+                    "author" : "String",
+                    "link" : "String"
+                }
             }
         },
         "/detail/" : {
             "POST" : {
-                "data" : "detail page to be scraped"
+                'url' : request.base_url() + "/detail/",
+                'description' : "gets the detail of a single page",
+                "data" : "detail page to be scraped",
+                'returns' : {
+                    "title" : "String",
+                    "author" : "String",
+                    "date" : "String",
+                    "text" : "String"
+                }
             }
         },
     })
