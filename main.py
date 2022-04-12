@@ -1,9 +1,9 @@
 from config import app
 from api import *
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
+# uncomment if your using environment files
+# from dotenv import load_dotenv
+# load_dotenv()
 
 
 # uncomment to run the project locally

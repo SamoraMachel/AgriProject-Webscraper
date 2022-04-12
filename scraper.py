@@ -31,8 +31,9 @@ class AgroSpider(scrapy.Spider):
         for article in response.css(".public-search-result"):
             yield {
                 "title" : article.css(".content h2 a::text").get(),
-                "text" : article.css(".content .field-body p::text").get(),
-                "author": article.css(".content .content-footer .field-byline a::text").get()
+                "text" : article.css(".content .field-body p::text").get() if not None else article.css(".content .field-body::text").get().strip('\n').strip(' '),
+                "author": article.css(".content .content-footer .field-byline a::text").get(), 
+                "link": article.css(".content h2 a::attr(href)").get()
             }
         
         
