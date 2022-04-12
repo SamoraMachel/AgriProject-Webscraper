@@ -22,7 +22,17 @@ def home():
 def requestForData():
     recommendation_list : list[str] = [
         'goat feeds',
-        'cow feeds'
+        'cow feeds',
+        'farming technology',
+        'farm management',
+        'livestock technology',
+        'planting',
+        'farm market',
+        'crop news',
+        'conservation',
+        'poultry',
+        'soil health',
+        'poultry health'
     ] 
     scrape_with_crochet(recommendation_list[Random().randint(0, recommendation_list.__len__() - 1)])
     time.sleep(5)

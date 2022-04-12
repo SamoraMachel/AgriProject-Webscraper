@@ -30,6 +30,7 @@ class AgroSpider(scrapy.Spider):
     def parse(self, response, **kwargs):
         for article in response.css(".public-search-result"):
             yield {
+                "image" : article.css(".field-image picture img::attr(data-srcset)").get(),
                 "title" : article.css(".content h2 a::text").get(),
                 "text" : article.css(".content .field-body p::text").get() if not None else article.css(".content .field-body::text").get().strip('\n').strip(' '),
                 "author": article.css(".content .content-footer .field-byline a::text").get(), 
