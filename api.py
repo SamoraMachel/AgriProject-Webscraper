@@ -12,7 +12,7 @@ def home():
     return jsonify({
         "/recommend/" : {
             "GET" : {
-                'url' : request.base_url() + "/recommend/",
+                'url' : request.base_url + "recommend/",
                 'description' : "get random recommendations to display in the home screen",
                 'returns' : {
                     "title" : 'String',
@@ -25,7 +25,7 @@ def home():
         },
         "/question/" : {    
             "POST" : {
-                'url' : request.base_url() + "/question/",
+                'url' : request.base_url + "question/",
                 'description' :"data to be searched",
                 'data' : "String",
                 'returns' : {
@@ -39,7 +39,7 @@ def home():
         },
         "/detail/" : {
             "POST" : {
-                'url' : request.base_url() + "/detail/",
+                'url' : request.base_url + "detail/",
                 'description' : "gets the detail of a single page",
                 "data" : "detail page to be scraped",
                 'returns' : {
