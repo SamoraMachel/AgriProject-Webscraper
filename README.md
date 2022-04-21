@@ -1,4 +1,4 @@
-# AgriProject-Webscraper
+# Farmers Agro Project Webscrapper
 This is a simple web scraper the captures farmers relates requests and returns relevant data in form of JSON
  
 The live project is hosted at - 
