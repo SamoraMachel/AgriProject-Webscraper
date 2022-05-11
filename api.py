@@ -70,7 +70,7 @@ def requestForData():
         'poultry health'
     ] 
     scrape_with_crochet(recommendation_list[Random().randint(0, recommendation_list.__len__() - 1)], AgroSpider)
-    time.sleep(5)
+    time.sleep(10)
     return jsonify(output_data)
 
 @app.route('/question/', methods=['POST'])
@@ -78,7 +78,7 @@ def scrapeData():
     data  = dict(request.get_json())
     search_data = data.get('data')
     scrape_with_crochet(search_data, AgroSpider)
-    time.sleep(5)
+    time.sleep(10)
     return jsonify(output_data)
 
 @app.route('/detail/', methods=['POST'])
@@ -86,6 +86,6 @@ def detail():
     data  = dict(request.get_json())
     link = data.get('data')
     scrape_with_crochet(link, AgroDetailSpider)
-    time.sleep(3)
+    time.sleep(5)
     return jsonify(output_data)
 

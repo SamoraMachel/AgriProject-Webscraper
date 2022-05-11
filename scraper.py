@@ -61,6 +61,7 @@ class AgroDetailSpider(scrapy.Spider):
             "title" : response.css(".page-primary-content h1::text").get(),
             "author" : response.css('.page-primary-content .field-byline a::text').get(),
             "date" : response.css('.page-primary-content .byline-date::text').get(),
+            "image": response.css('.page-primary-content .field-image picture img::attr(data-srcset)').get(),
             "text" : response.css("section article .field-body p::text").getall()
         }
         
