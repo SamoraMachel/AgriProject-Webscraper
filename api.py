@@ -2,6 +2,7 @@ from crypt import methods
 from random import Random
 from flask import jsonify, request
 import time
+from flask import Response
 from scraper import scrape_with_crochet, output_data, AgroSpider, AgroDetailSpider
 from config import app, crochet
 
@@ -70,7 +71,9 @@ def requestForData():
         'poultry health'
     ] 
     scrape_with_crochet(recommendation_list[Random().randint(0, recommendation_list.__len__() - 1)], AgroSpider)
-    time.sleep(10)
+    time.sleep(8)
+    if (output_data == []):
+        return Response(status=400)
     return jsonify(output_data)
 
 @app.route('/question/', methods=['POST'])
@@ -78,7 +81,9 @@ def scrapeData():
     data  = dict(request.get_json())
     search_data = data.get('data')
     scrape_with_crochet(search_data, AgroSpider)
-    time.sleep(10)
+    time.sleep(8)
+    if (output_data == []):
+        return Response(status=400)
     return jsonify(output_data)
 
 @app.route('/detail/', methods=['POST'])
@@ -87,5 +92,7 @@ def detail():
     link = data.get('data')
     scrape_with_crochet(link, AgroDetailSpider)
     time.sleep(5)
+    if (output_data == []):
+        return Response(status=400)
     return jsonify(output_data)
 
